@@ -1,5 +1,7 @@
 # High-Performance Similarity Search Engine
 
+**Metehan Doğan - 269797012**
+
 A high-performance semantic similarity search engine developed as part of the YZM 513 project. The project explores different optimization techniques for similarity search, including profiling, matrix operations, dimensionality reduction, vectorization, and parallel computing.
 
 The final system uses precomputed sentence embeddings and NumPy-based vectorized operations to retrieve the top-k most similar documents.
@@ -11,13 +13,20 @@ high-performance-similarity-search/
 ├── README.md
 ├── requirements.txt
 ├── requirements-dataset.txt
+│
 ├── data/                              # Synthetic document dataset
+│
 ├── embeddings/                        # Precomputed document and query embeddings
 │   ├── 1k/
 │   ├── 3k/
 │   ├── 6k/
 │   └── 12k/
+│
 ├── results/                           # Experimental outputs and benchmark results
+│   ├── phase1/
+│   ├── phase2/
+│   ├── phase3/
+│   └── phase4/
 │
 ├── notebooks/
 │   ├── 269797012_Similarity_Search_Dataset_Preparation.ipynb
@@ -61,39 +70,39 @@ The experiments are organized into four phases:
 
 The project uses a synthetic English document dataset containing 12,000 documents.
 
-| Configuration       | Value                                    |
-| ------------------- | ---------------------------------------- |
-| Dataset             | `synthetic_documents_12000_1b_v2.csv`    |
-| Embedding model     | `sentence-transformers/all-MiniLM-L6-v2` |
-| Embedding dimension | 384                                      |
-| Corpus sizes        | 1K, 3K, 6K, 12K                          |
-| Number of queries   | 50                                       |
-| Query generation    | First 25 words of selected documents     |
+| Configuration | Value |
+|---|---|
+| Dataset | `synthetic_documents_12000_1b_v2.csv` |
+| Embedding model | `sentence-transformers/all-MiniLM-L6-v2` |
+| Embedding dimension | 384 |
+| Corpus sizes | 1K, 3K, 6K, 12K |
+| Number of queries | 50 |
+| Query generation | First 25 words of selected documents |
 
-The document and query embeddings are stored as NumPy arrays. Document IDs and query information are stored separately as CSV metadata files.
+Document and query embeddings are stored as NumPy arrays. Document IDs and query information are stored separately as CSV metadata files.
 
-**The dataset and precomputed embeddings are already available in the project directories.** They do not need to be regenerated for normal benchmark execution.
+**The dataset and precomputed embeddings are already included in the project.** They do not need to be regenerated for normal benchmark execution.
 
 ## Quick Start
 
 ### 1. Environment Setup
 
-Create and activate a virtual environment:
+Create and activate a virtual environment using CMD:
 
-```powershell
+```cmd
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+.venv\Scripts\activate.bat
 ```
 
-Install the project dependencies:
+Install the main project dependencies:
 
-```powershell
+```cmd
 python -m pip install -r requirements.txt
 ```
 
-For dataset generation and preparation dependencies:
+For dataset generation and preparation, install the additional dependencies:
 
-```powershell
+```cmd
 python -m pip install -r requirements-dataset.txt
 ```
 
@@ -107,11 +116,11 @@ notebooks/269797012_Similarity_Search_Dataset_Preparation.ipynb
 
 To generate document and query embeddings using the existing dataset, run:
 
-```powershell
+```cmd
 python prepare_embeddings.py
 ```
 
-This script:
+The preparation process:
 
 1. Loads and cleans the document dataset.
 2. Selects a reproducible subset of 12,000 documents.
@@ -129,42 +138,40 @@ Run the scripts from the project root directory.
 
 Run the naive similarity search:
 
-```powershell
-python phase1_baseline/naive_search.py
+```cmd
+python phase1_baseline\naive_search.py
 ```
 
-The script loads the 12K corpus and query embeddings, calculates cosine similarity using pure Python loops, and retrieves the top-5 most similar documents for each query.
+Run the profiling script:
 
-Run profiling:
-
-```powershell
-python phase1_baseline/profiling_template.py
+```cmd
+python phase1_baseline\profiling_template.py
 ```
 
-The profiling template supports:
+The profiling experiments use:
 
-- cProfile for function-level performance analysis.
-- line_profiler for line-by-line profiling.
-- py-spy for flame graph generation.
+- **cProfile:** Function-level performance analysis.
+- **line_profiler:** Line-by-line execution analysis.
+- **py-spy:** Sampling-based profiling and flame graph generation.
 
 #### Phase 2: Matrix Operations
 
 Run the sparse and dense representation comparison:
 
-```powershell
-python phase2_matrix_ops/sparse_dense_compare.py
+```cmd
+python phase2_matrix_ops\sparse_dense_compare.py
 ```
 
 Run the SVD and power iteration experiments:
 
-```powershell
-python phase2_matrix_ops/svd_power_iteration.py
+```cmd
+python phase2_matrix_ops\svd_power_iteration.py
 ```
 
 Run the vectorization comparison:
 
-```powershell
-python phase2_matrix_ops/vectorise_vs_loop.py
+```cmd
+python phase2_matrix_ops\vectorise_vs_loop.py
 ```
 
 The corresponding Jupyter notebook is also available:
@@ -177,33 +184,37 @@ phase2_matrix_ops/vectorise_vs_loop.ipynb
 
 Run the thread-based search experiment:
 
-```powershell
-python phase3_parallelism/thread_pool_search.py
+```cmd
+python phase3_parallelism\thread_pool_search.py
 ```
 
 Run the process-based search experiment:
 
-```powershell
-python phase3_parallelism/process_pool_search.py
+```cmd
+python phase3_parallelism\process_pool_search.py
 ```
 
 Run the asynchronous search experiment:
 
-```powershell
-python phase3_parallelism/async_search.py
+```cmd
+python phase3_parallelism\async_search.py
 ```
 
-The `ray_search.py` file is retained in the project directory but is not part of the executed experiments or final system.
+The `ray_search.py` file is retained in the project directory but is not included in the executed experiments or final system.
 
 #### Phase 4: Final System
 
-The final implementation and live demonstration are provided as a Jupyter notebook:
+The final implementation and interactive demonstration are provided as a Jupyter notebook:
 
 ```text
 phase4_final/phase4_final_system.ipynb
 ```
 
-Open and execute the notebook to reproduce the final system experiments.
+Launch the notebook using:
+
+```cmd
+jupyter notebook phase4_final\phase4_final_system.ipynb
+```
 
 The final pipeline uses:
 
@@ -218,7 +229,7 @@ The notebook also includes corpus scaling benchmarks and an interactive query de
 
 ## Benchmarking
 
-The project uses a shared benchmarking utility in `benchmark_utils.py`.
+The project uses a shared benchmarking utility implemented in `benchmark_utils.py`.
 
 The utility provides:
 
@@ -230,11 +241,11 @@ The utility provides:
 
 For consistent comparisons:
 
-1. Use the same query embeddings across corpus sizes.
-2. Use the same embedding model and vector dimensions.
-3. Compare execution times using the same hardware and environment.
+1. Use the same queries and embedding model when comparing corpus sizes.
+2. Keep vector dimensions consistent across experiments.
+3. Perform benchmark runs under the same hardware and environment.
 4. Report mean execution time and standard deviation.
-5. Verify optimized results against the baseline.
+5. Verify optimized search results against reference results.
 6. Store experimental outputs under the appropriate `results/` directories.
 
 ## Results and Reproducibility
@@ -245,7 +256,7 @@ Experimental outputs, including benchmark measurements, profiling reports, CSV f
 results/
 ├── phase1/
 ├── phase2/
-└── phase3/
+├── phase3/
 └── phase4/
 ```
 
@@ -280,3 +291,9 @@ The project primarily uses:
 - **Missing dependencies:** Install the required packages using the appropriate requirements file.
 - **Slow baseline execution:** The Phase 1 implementation uses pure Python loops and is intentionally computationally expensive.
 - **Memory issues:** Start with a smaller corpus when testing experimental implementations.
+
+## Project Repository
+
+Source code, experimental implementations, notebooks, benchmark results, and project documentation are available on GitHub:
+
+[High-Performance Similarity Search Engine](https://github.com/dgnmetehan/high-performance-similarity-search)
