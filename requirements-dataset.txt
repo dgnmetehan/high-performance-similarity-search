@@ -1,0 +1,20 @@
+# Dataset generation and preparation
+# Install with: pip install -r requirements-dataset.txt
+
+# Data processing
+pandas>=2.0.0
+tqdm>=4.65.0
+
+# Hugging Face 
+transformers
+huggingface_hub
+accelerate
+
+# Model execution
+torch
+
+# Quantization (optional, mainly for GPU/Colab environments)
+bitsandbytes
+
+# Document embeddings
+sentence-transformers

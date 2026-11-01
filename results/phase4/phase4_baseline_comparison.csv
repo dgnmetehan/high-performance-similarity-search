@@ -1,0 +1,4 @@
+version,time_seconds,speedup_vs_report_baseline
+"Phase 1 baseline (report, earlier run)",28.394,1.0
+Phase 1 baseline.txt (later separate run),29.237241,0.9711586671259438
+"Phase 4 NumPy (12K, measured now)",0.014610198571452723,1943.4369670703745
