@@ -239,14 +239,6 @@ The utility provides:
 - Result verification.
 - Benchmark plotting and visualization.
 
-For consistent comparisons:
-
-1. Use the same queries and embedding model when comparing corpus sizes.
-2. Keep vector dimensions consistent across experiments.
-3. Perform benchmark runs under the same hardware and environment.
-4. Report mean execution time and standard deviation.
-5. Verify optimized search results against reference results.
-6. Store experimental outputs under the appropriate `results/` directories.
 
 ## Results and Reproducibility
 
@@ -260,9 +252,7 @@ results/
 └── phase4/
 ```
 
-Phase 4 benchmark results and visualizations are generated through the final system notebook.
-
-The `notebooks/report_tables.ipynb` notebook contains the tables and visualizations prepared for the project report.
+The `notebooks/report_tables.ipynb` notebook contains some of the tables and visualizations prepared for the project report.
 
 ## Requirements
 
